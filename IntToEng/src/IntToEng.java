@@ -10,15 +10,27 @@ public class IntToEng {
     // 数値を英訳する変換するメソッド
     static String translateEng(int n) {
     	if(n==0)return "zero";
-    	if(n<20)return tlTwenty(n);
+    	//if(n<20)return tlTwenty(n);
     	else{
-    	String restResult="";
-    	String quotResult="";
-    	int quot=n/10;
-    	int rest=n%10;
-        quotResult=tlHundred(quot);
-    	restResult=tlTwenty(rest);
-        return quotResult+restResult;
+    		int quot=0;
+    		int rest=n;
+    		do{
+    		quot=rest/100;
+    		rest=rest%100;
+    		}
+    		while(quot>100);
+    		String ans="";
+    	if(quot>0)ans+=tlTwenty(quot)+"hundred ";
+    	if(rest!=0){
+    		if(rest<20)ans+=tlTwenty(rest);
+    		else{
+    			quot=rest/10;
+    			rest=rest%10;
+    			ans+=twoDigits(quot);
+    			ans+=tlTwenty(rest);
+    		}
+    	}
+    	return ans;
     	}
     }
     
@@ -27,8 +39,9 @@ public class IntToEng {
     			"eleven ","twelve ","thirteen ","fourtenn ","fifteen ","sixteen ","seventeen ","eighteen ","nineteen "};	
     	return a[r];
     }
-    static String tlHundred(int q){
-    	String a[]=new String[]{"","","twenty ","thirty ","forty ","fifty ","sixty ","seventy ","eighty ","ninety ","one hundred "};
+    static String twoDigits(int q){
+    	String a[]=new String[]{"","","twenty ","thirty ","forty ","fifty ","sixty ","seventy ","eighty ","ninety "};
     	return a[q];    	
     }
+    
 }
