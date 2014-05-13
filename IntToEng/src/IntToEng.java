@@ -11,47 +11,28 @@ public class IntToEng {
     static String translateEng(int n) {
     	int keta=Integer.toString(n).length();
     	if(keta>6){
-    	System.out.println("1000000未満の数を入力して下さい");
-    	break;
+    	return "1,000,000未満の数を入力して下さい";
     	}
-    	if(n==0)return "zero";
+    	else if(n==0)return "zero";
     	else{
     		String ans="";
     		int quot=0;
-    		int rest=n;
+    		int rest=0;
     		
-    		int count=keta/3;
+    		
     		int tmp=n;
-    		
-    		for(int i=count; i==0; count--){
-    			int t=1000^count;
+    		int count=keta/3;
+    		if(keta>3){
+    		for(int i=count; i>0; i--){
+    			int t=(int) Math.pow(1000, i);
     			quot=tmp/t;
     			rest=tmp%t;
-    			//ans+=//100までの数を出すメソッド
+    			ans+=hundred(quot);
     			ans+=unit(count);
-    			rest=tmp;
+    			tmp=rest;
     		}
-    		//ansに100までの数を出すメソッド
-    	
-    		/*
-    		
-    		do{
-    		quot=rest/1000;
-    		rest=rest%1000;
-    		count++;
     		}
-    		while(quot>100);
-    		String ans="";
-    	if(quot>0)ans+=tlTwenty(quot)+"hundred ";
-    	if(rest!=0){
-    		if(rest<20)ans+=tlTwenty(rest);
-    		else{
-    			quot=rest/10;
-    			rest=rest%10;
-    			ans+=twoDigits(quot);
-    			ans+=tlTwenty(rest);
-    		}
-    	}*/
+    		ans+=hundred(tmp);
     	return ans;
     	}
     }
@@ -70,9 +51,20 @@ public class IntToEng {
     	return a[n];		
     	}
     static String hundred(int x){
+    	int quot1=x/100;
+    	int rest1=x%100;
     	String ans="";
-    	return ans;
+    	if(quot1>0)ans+=tlTwenty(quot1)+unit(0);
+    	if(rest1!=0){
+    		if(rest1<20)ans+=tlTwenty(rest1);
+    		else{
+    			quot1=rest1/10;
+    			rest1=rest1%10;
+    			ans+=twoDigits(quot1);
+    			ans+=tlTwenty(rest1);
+    		}    	
     }
+       	return ans;
     }
     
 }
